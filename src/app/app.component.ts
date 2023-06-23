@@ -23,9 +23,22 @@ export class AppComponent {
       ]],
       fullAddress: ['',Validators.required],
       skills: fb.array([])
+
     })
   }
-
+  //form = new FormGroup({
+  //  fullName: new FormControl('',[
+  //    Validators.required,
+  //    Validators.minLength(5),
+  //    Validators.maxLength(15)
+  //    ]),
+  //  emailAddress: new FormControl('',[
+  //    Validators.required,
+  //    Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+  //    ]),
+  //  fullAddress: new FormControl(),
+  //  skills: new FormArray([])
+  //});
 
   get Skills(){
     return this.form.get('skills') as FormArray;
