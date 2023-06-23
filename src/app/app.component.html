@@ -2,7 +2,7 @@
   <div class="form-area">
     <h1>Reactive Form</h1>
 
-    <form [formGroup]='furrm'>
+    <form (ngSubmit)="onSubmit()" [formGroup]='form '>
       <div class="form-group">
         <label>First Name</label>
         <input 
@@ -27,20 +27,23 @@
         name="emailAddress" 
         formControlName="emailAddress"
         >
+        <div class="alert alert-danger" *ngIf="emailAddress?.errors?.['required'] && emailAddress?.touched">required</div>
+        <div class="alert alert-danger" *ngIf="emailAddress?.errors?.['pattern']">Correct it</div>
+      
       </div>
       <div class="form-group">
-        <label>Address</label>
+        <label>Full Address</label>
         <textarea 
-        cols="30" 
-        rows="10" 
-        placeholder="Address" 
+        placeholder="Full Address" 
         class="form-control" 
-        name="fullAddress"
-        formControlName="fullAddress" 
-        ></textarea>
+        name="fullAddress" 
+        formControlName="fullAddress"
+        >
+        <div class="alert alert-danger" *ngIf="fullAddress?.errors?.['required'] && fullAddress?.touched">required</div>
+      </textarea>
       </div>
-      
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
   
     </form>
   </div>
