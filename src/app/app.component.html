@@ -43,6 +43,27 @@
       </textarea>
       </div>
 
+      <div class="form-group">
+        <label>Skills (Seperate skills via Comma or Enter)</label>
+        <input 
+        type="text" 
+        class="form-control"
+        #skill 
+        (keyup)="addSkills(skill,$event) ">
+
+        <ul class="list-group">
+          <li 
+          class="list-group-item"
+          *ngFor = "let skill of Skills.controls ; let i = index"
+          >
+            {{skill.value}}
+            <a class="btn btn-sm btn-danger" (click)="removeSkills(i) && true">X</a>
+          </li>
+        </ul>
+        <div class="alert alert-danger" *ngIf="addSkills(skill)">required</div>
+
+      </div>
+
       <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
   
     </form>
