@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormArray, NgForm, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {FormGroup,FormControl} from '@angular/forms';
 
 
@@ -9,20 +9,23 @@ import {FormGroup,FormControl} from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  validSkill: boolean = true;
-  form = new FormGroup({
-    fullName: new FormControl('',[
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(15)
-      ]),
-    emailAddress: new FormControl('',[
-      Validators.required,
-      Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
-      ]),
-    fullAddress: new FormControl(),
-    skills: new FormArray([])
-  });
+  form:any;
+  constructor(fb: FormBuilder){
+    this.form = fb.group({
+      fullName: ['',[
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(15)
+      ]],
+      emailAddress: ['',[
+        Validators.required,
+        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+      ]],
+      fullAddress: ['',Validators.required],
+      skills: fb.array([])
+    })
+  }
+
 
   get Skills(){
     return this.form.get('skills') as FormArray;
