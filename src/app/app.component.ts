@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormArray, FormBuilder, Validators} from '@angular/forms';
 import {FormGroup,FormControl} from '@angular/forms';
-
+import { noSpace } from './Validators/nospace.validators';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +19,11 @@ export class AppComponent {
       ]],
       emailAddress: ['',[
         Validators.required,
+        noSpace.noSpaceValidations,
         Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
       ]],
       fullAddress: ['',Validators.required],
       skills: fb.array([])
-
     })
   }
   //form = new FormGroup({
@@ -40,19 +40,11 @@ export class AppComponent {
   //  skills: new FormArray([])
   //});
 
-  get Skills(){
-    return this.form.get('skills') as FormArray;
+  
+  get fc(){
+    return this.form.controls;
   }
-
-  get fullName(){
-    return this.form.get('fullName');
-  }
-  get emailAddress(){
-    return this.form.get('emailAddress');
-  }
-  get fullAddress(){
-    return this.form.get('fullAddress');
-  }
+  
   onSubmit(){
     console.log(this.form.value);
   }
@@ -60,7 +52,7 @@ export class AppComponent {
     if($event){
     if(($event.keyCode == 188 || $event.keyCode == 32) && skills.value.length > 1){
       if(skills.value.length > 2 && /^[a-z\d]+$/i.test(skills.value.slice(0, skills.value.length - 1))){
-      this.Skills.push(
+      (this.fc.skills as FormArray).push(
       new FormControl(skills.value.slice(0, skills.value.length - 1)));
       skills.value = '';
       console.log(this.form.value);
@@ -69,7 +61,7 @@ export class AppComponent {
     }}
     else if($event.key == "Enter"){
       if(skills.value.length > 1 && /^[a-z\d]+$/i.test(skills.value)){
-        this.Skills.push(
+        (this.fc.skills as FormArray).push(
         new FormControl(skills.value));
         skills.value = '';
         console.log(this.form.value);}
@@ -83,7 +75,7 @@ export class AppComponent {
       return true;
     }
     removeSkills(index: number){
-      this.Skills.removeAt(index);
+      (this.fc.skills as FormArray).removeAt(index);
       return true;
     }
 }
