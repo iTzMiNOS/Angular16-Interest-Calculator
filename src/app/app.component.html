@@ -1,71 +1,166 @@
-<div class="container mt-5">
-  <div class="form-area">
-    <h1>Reactive Form</h1>
+<div class="container m-0">
+  <!--from here-->
+  <!-- Angular Calculator Project -->
+<div class="
+min-w-fit
+min-h-fit
+max-w-fit
+max-h-fit
+bg-transparent
+flex
+m-0
+items-center
+justify-center
+p-0">
 
-    <form (ngSubmit)="onSubmit()" [formGroup]='form '>
-      <div class="form-group">
-        <label>First Name</label>
-        <input 
-        type="text" 
-        placeholder="Full Name" 
-        class="form-control" 
-        name="fullName" 
-        formControlName="fullName"
-        required
-        minlength="5"
-        maxlength="15"
-        >
-        <div class="alert alert-danger" *ngIf="fc.fullName?.errors?.['required'] && fc.fullName?.touched">required</div>
-        <div class="alert alert-danger" *ngIf="fc.fullName?.errors?.['minlength']">minlength</div>
+  <div class="
+  w-full
+  m-0
+  h-auto
+  rounded-xl
+  shadow-2xl
+  border-solid
+  border-black
+  border-[5px]
+  shadow-slate-950
+  text-gray-800
+  bg-gradient-to-b
+  from-[#2A2A72]
+  via-[#009FFD]
+  to-[#2A2A72]
+  relative
+  overflow-hidden" 
+  style="max-width: 600px;">
+
+  <!-- Title -->
+  <h1 class="text-center text-white py-10 text-3xl font-bold">Calculate Your Profit By Our Expert Advisor</h1>
+
+    <!-- Screen -->
+    <div class="
+    w-full
+    h-44
+    border-x
+  border-black
+    border-[5px]
+    bg-gradient-to-b
+    from-gray-800
+    to-gray-700
+    text-left">
+      <!-- Functions -->
+      <!-- Number -->
+      <div><h1 class="
+      w-full
+      py-2
+      px-6
+      ml-2
+      text-3xl
+      text-white
+      font-thin">
+      Total Net Percentage Gain: {{calculatePower(1.0514,form.controls.duration.value*12)-1 | percent: '1.0-1'}}
+      </h1>
+      <h1 class="
+      w-full
+      px-6
+      py-2
+      ml-2
+      text-3xl
+      text-white
+      font-thin">
+      Total Net Profit After: {{form.controls.deposit.value * calculatePower(1.0514,form.controls.duration.value*12) - form.controls.deposit.value | currency}}
+      </h1>
+      <h1 class="
+      w-full
+      px-6
+      py-2
+      ml-2
+      text-3xl
+      text-white
+      font-thin">
+      Total Net Balance: {{form.controls.deposit.value * calculatePower(1.0514,form.controls.duration.value*12) | currency}}
+      </h1>
       </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input 
-        type="email" 
-        placeholder="Email Address" 
-        class="form-control" 
-        name="emailAddress" 
-        formControlName="emailAddress"
-        >
-        <div class="alert alert-danger" *ngIf="fc.emailAddress?.errors?.['required'] && fc.emailAddress?.touched">required</div>
-        <div class="alert alert-danger" *ngIf="fc.emailAddress?.errors?.['pattern']">Correct it</div>
-        <div class="alert alert-danger" *ngIf="fc.emailAddress?.errors?.['noSpaceValidator']">No space</div>
+      <!--End Screen-->
+    </div>
+      <!--Calculator Button Area-->
+      <div class="
+      w-full
+      pt-2
+      bg-gradient-to-b
+      from-slate-900
+      to-slate-950">
+        <div class="
+        flex
+        w-full
+        ">
+          <!--Clear Button-->
+          <div class="
+          w-5/6
+          ml-10">
+          <div class="form-area">
+            <form [formGroup]='form '>
+              <div class="form-group text-white text-xl">
+                <label class="text-2xl">Initial Deposit: {{form.controls.deposit.value | currency}}</label>
+                <input 
+                type="number" 
+                placeholder="Initial deposit" 
+                class="form-control w-80 focus:border-slate-800 focus:border-[2px]" 
+                name="deposit" 
+                formControlName="deposit"
+                pattern="/^-?\d+\.?\d*$/" 
+                onKeyPress="if(this.value.length==6) return false;"
+                (keydown)="onKeyDown($event)"
+                >
+                <div class="alert alert-warning" *ngIf="form.controls.deposit?.errors?.['required'] && form.controls.deposit?.touched">Enter Deposit Value...</div>
 
-      </div>
-      <div class="form-group">
-        <label>Full Address</label>
-        <textarea 
-        placeholder="Full Address" 
-        class="form-control" 
-        name="fullAddress" 
-        formControlName="fullAddress"
-        >
-      </textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Skills (Seperate skills via [Comma,Space, or Enter])</label>
-        <input 
-        type="text" 
-        class="form-control"
-        #skill 
-        (keyup)="addSkills(skill,$event) ">
-
-        <ul class="list-group">
-          <li 
-          class="list-group-item"
-          *ngFor = "let skill of fc.skills.controls ; let i = index"
-          >
-            {{skill.value}}
-            <a class="btn btn-sm btn-danger" (click)="removeSkills(i) && true">X</a>
-          </li>
-        </ul>
-        <div class="alert alert-danger" *ngIf="addSkills(skill)">required</div>
-
-      </div>
-
-      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
-  
-    </form>
+              </div>
+              <div class="form-group text-white text-xl">
+                <label 
+                class="text-2xl"
+                for="customRange1">Investment Period: {{form.controls.duration.value * 12 | number}} Months of AutoTrading</label>
+                <input 
+                type="range" 
+                class="form-range range-labels" 
+                id="customRange1"
+                class="form-control px-0 text-center" 
+                formControlName="duration"
+                name="duration"
+                min="0"
+                max="3"
+                step="0.083333333333" >
+                <div class="d-flex text-sm justify-content-between position-relative">
+                  <svg width="10" height="10" style="position: absolute; left: 1.2%; top: -10px;">
+                    <rect x="0" y="0" width="5" height="20" class="selected" style="fill: gray;" />
+                  </svg>
+                  <svg width="10" height="10" style="position: absolute; left: 33.4%; top: -10px;">
+                    <rect x="0" y="0" width="5" height="20" class="selected" style="fill: gray;" />
+                  </svg>  
+                  <svg width="10" height="10" style="position: absolute; left: 65.5%; top: -10px;">
+                    <rect x="0" y="0" width="5" height="20" class="selected" style="fill: gray;" />
+                  </svg>
+                  <svg width="10" height="10" style="position: absolute; left: 97.8%; top: -10px;">
+                    <rect x="0" y="0" width="5" height="20" class="selected" style="fill: gray;" />
+                  </svg>
+                </div>
+                <div class="d-flex justify-between">
+                  <ng-container *ngFor="let i of generateRange(0, 3)">
+                    <div *ngIf="i < 2; else years">
+                      <span>{{ i }} year</span>
+                    </div>
+                    <ng-template #years>
+                      <span>{{ i }} years</span>
+                    </ng-template>
+                    
+                  </ng-container>
+                </div>
+                <div class="alert alert-warning" *ngIf="form.controls.duration?.errors?.['required'] && form.controls.duration?.touched">required</div>
+              </div>
+            </form>
+          </div>
+        </div>
+          </div>
+          <!--End Clear Button-->
+      <!--End Calculator Button Area-->
+    </div>
   </div>
+
 </div>
